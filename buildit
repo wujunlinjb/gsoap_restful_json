@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#soapcpp2:
+#        -0      no SOAP bindings, use REST
+#        -L      don't generate soapClientLib/soapServerLib
+#        -S      generate server-side code only
+#        -c      generate C source code
+#        -c++    generate C++ source code (default)
+#        -w      don't generate WSDL and schema files
+#        -x      don't generate sample XML message files
+#        -i      generate C++ service proxies and objects inherited from soap struct
+
+if [ -z "$1" ];then
+    make clean
+    soapcpp2 -0 -L -S -c++ -w -x -d./soap_generation_files testWebserver.h
+    make
+elif [ "$1" == "clean" ];then
+    make clean
+elif [ "$1" == "soap" ];then
+    soapcpp2 -0 -L -S -c++ -w -x -d./soap_generation_files testWebserver.h
+else
+    echo ""
+    echo "Usage:"
+    echo "    ./buildit         //build"
+    echo "    ./buildit clean   //clean"
+    echo "    ./buildit soap    //use soapcpp2 tool to generate files"
+    echo ""
+fi
