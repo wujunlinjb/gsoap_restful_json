@@ -1,7 +1,7 @@
 #include "soapH.h"
 
-//#include "json.h"
-//#include "json-forwards.h"
+#include "json.h"
+#include "json-forwards.h"
 
 #include "WebServer.h"
 
@@ -41,11 +41,33 @@ int WebServer::init()
         soap_print_fault(msoap, stderr);
         return 1;
     }
-    printf("-----%s:%d\n", __func__, __LINE__);
 
     msoap->userid = USER_ID;
     msoap->passwd = PASSWD;
 
+    Json::Value root, aroot;
+    Json::Reader reader;
+    const char* s = "{\"name\":\"nufront\", \"msg\":[\"hahaha\", \"hehehehe\", \"lalalalalala\"], \"number\":1024, \"subobj\":{\"item1\":\"Beijing\", \"item2\":\"Guangdong\", \"item3\":2}}";
+    bool boolean = reader.parse(s, root);
+    std::cout << "reader.parse(s, root) return: " << boolean << std::endl;
+
+    printf("root[name].asString().data() = %s\n", root["name"].asString().data());
+    printf("root[name].asString().c_str() = %s\n", root["name"].asString().c_str());
+    std::cout << "name:" << root["name"].asString() << std::endl;
+    Json::Value array = root["msg"];
+    for (int i = 0; i < array.size(); i++)
+    {
+        std::cout << "----" << array[i].asString() << std::endl;
+    }
+    std::cout << "number:" << root["number"].asInt() << std::endl;
+    std::cout << "subobj: item1: " << root["subobj"]["item1"].asString() << std::endl;
+
+    Json::FastWriter fastw;
+    Json::StyledWriter styledw;
+    std::string str = fastw.write(root);
+    std::cout << str << std::endl;
+    str = styledw.write(root);
+    std::cout << str << std::endl;
     return 0;
 }
 
