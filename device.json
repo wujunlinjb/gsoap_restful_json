@@ -1,0 +1,44 @@
+{
+   "camera0" : {
+      "HostAddr" : "192.168.2.201",
+      "HostPort" : 554,
+      "Password" : "123n4567",
+      "SourceURL" : "/h264/main/ch1/av_stream",
+      "UserNname" : "admin"
+   },
+   "camera1" : {
+      "HostAddr" : "192.168.2.201",
+      "HostPort" : 554,
+      "Password" : "123n4567",
+      "SourceURL" : "/h264/main/ch1/av_stream",
+      "UserNname" : "admin"
+   },
+   "camera2" : {
+      "HostAddr" : "192.168.22.151",
+      "HostPort" : 8554,
+      "Password" : "123n4567",
+      "SourceURL" : "/test.mkv",
+      "UserNname" : "admin"
+   },
+   "camera3" : {
+      "HostAddr" : "192.168.22.151",
+      "HostPort" : 8554,
+      "Password" : "123n4567",
+      "SourceURL" : "/3Mbps_20Min.mkv",
+      "UserNname" : "admin"
+   },
+   "camera4" : {
+      "HostAddr" : "192.168.199.168",
+      "HostPort" : 8554,
+      "Password" : "admin1234",
+      "SourceURL" : "/30min-nosound.mkv",
+      "UserNname" : "admin"
+   },
+   "pids_broadcast" : {
+      "HostAddr" : "192.168.2.199",
+      "HostPort" : 10554,
+      "Password" : "123n4567",
+      "SourceURL" : "/pids_broadcast.sdp",
+      "UserNname" : "admin"
+   }
+}

@@ -9,9 +9,9 @@ SRC=$(wildcard ./*.cpp) \
 	./jsoncpp/jsoncpp.cpp
 
 LIBS=-lgsoap++
-CIFLAGS=-I ./plugin \
-		-I ./soap_generation_files \
-		-I ./jsoncpp
+CIFLAGS=-I./plugin \
+		-I./soap_generation_files \
+		-I./jsoncpp
 
 CLFLAGS=-L /home/nu/lib
 CFLAGS=$(CIFLAGS) $(CLFLAGS)

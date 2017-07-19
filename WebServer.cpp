@@ -1,7 +1,8 @@
 #include "soapH.h"
 
-#include "json.h"
-#include "json-forwards.h"
+//#include "json.h"
+//#include "json-forwards.h"
+#include "JsonTest.h"
 
 #include "WebServer.h"
 
@@ -45,6 +46,9 @@ int WebServer::init()
     msoap->userid = USER_ID;
     msoap->passwd = PASSWD;
 
+    Device dev;
+    dev.read_from_file();
+#if 0
     Json::Value root, aroot;
     Json::Reader reader;
     const char* s = "{\"name\":\"nufront\", \"msg\":[\"hahaha\", \"hehehehe\", \"lalalalalala\"], \"number\":1024, \"subobj\":{\"item1\":\"Beijing\", \"item2\":\"Guangdong\", \"item3\":2}}";
@@ -68,6 +72,7 @@ int WebServer::init()
     std::cout << str << std::endl;
     str = styledw.write(root);
     std::cout << str << std::endl;
+#endif
     return 0;
 }
 
@@ -123,22 +128,36 @@ int http_GET_handler(struct soap* soap)
     }
     printf("http_GET_handler()!  path: %s\n", soap->path);
 
-#if 0
-    if (strchr(soap->path + 1, '/') || strchr(soap->path + 1, '\\'))
-        return 403;
-    if (!soap_tag_cmp(soap->path, "*.xml"))
-        return copy_file(soap, soap->path + 1, "text/xml");
-    if (!soap_tag_cmp(soap->path, "*.json"))
-        return copy_file(soap, soap->path + 1, "text/json");
+    std::string id;
+    if (!soap_tag_cmp(soap->path, "/device") || !soap_tag_cmp(soap->path, "/device/"))
+    {
+        id = "all";
+    }
+    else if (!soap_tag_cmp(soap->path, "/device/*"))
+    {
+        if (*(soap->path + strlen(soap->path) - 1) == '/')
+        {
+            *(soap->path + strlen(soap->path) - 1) = 0;
+        }
+        id = soap->path + 8;
+    }
+    else
+    {
+        return 404;
+    }
 
-    return 404;
-#endif
-    if (soap_response(soap, SOAP_HTML))
+    Device dev;
+    std::string str;
+    if (dev.find_by_id(str, id) == false)
+    {
+        return 404;
+    }
+    //std::cout << str.size() << " ---- " << str.length() << std::endl;
+    if (soap_send_raw(soap, str.c_str(), str.length()))
     {
         soap_end_send(soap);
         return soap->error;
     }
-    soap_send(soap, "<html>http_GET_handler good !!!</html>");
     return soap_end_send(soap);
 }
 
