@@ -3,17 +3,23 @@
 
 #define JSON_FILE "device.json"
 
+#define RTSP_REQUEST_LENGTH_MAX    256
+
 Json::Value Device::root;
 
 void Device::add_object(char* id, char* username, char* password, char* ip, uint16_t port, char* URL)
 {
+    char entire[RTSP_REQUEST_LENGTH_MAX] = {0};
     Json::Value subobj;
 
-    subobj["UserNname"] = username;
+    snprintf(entire, RTSP_REQUEST_LENGTH_MAX, "rtsp://%s:%s@%s:%d%s", username, password, ip, port, URL);
+
+    subobj["Username"]  = username;
     subobj["Password"]  = password;
     subobj["HostAddr"]  = ip;
     subobj["HostPort"]  = port;
     subobj["SourceURL"] = URL;
+    subobj["Entire"]    = entire;
 
     root[id] = subobj;
 }

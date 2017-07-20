@@ -1,44 +1,50 @@
 {
    "camera0" : {
+      "Entire" : "rtsp://admin:123n4567@192.168.2.201:554/h264/main/ch1/av_stream",
       "HostAddr" : "192.168.2.201",
       "HostPort" : 554,
       "Password" : "123n4567",
       "SourceURL" : "/h264/main/ch1/av_stream",
-      "UserNname" : "admin"
+      "Username" : "admin"
    },
    "camera1" : {
+      "Entire" : "rtsp://admin:123n4567@192.168.2.201:554/h264/main/ch1/av_stream",
       "HostAddr" : "192.168.2.201",
       "HostPort" : 554,
       "Password" : "123n4567",
       "SourceURL" : "/h264/main/ch1/av_stream",
-      "UserNname" : "admin"
+      "Username" : "admin"
    },
    "camera2" : {
+      "Entire" : "rtsp://admin:123n4567@192.168.22.151:8554/test.mkv",
       "HostAddr" : "192.168.22.151",
       "HostPort" : 8554,
       "Password" : "123n4567",
       "SourceURL" : "/test.mkv",
-      "UserNname" : "admin"
+      "Username" : "admin"
    },
    "camera3" : {
+      "Entire" : "rtsp://admin:123n4567@192.168.22.151:8554/3Mbps_20Min.mkv",
       "HostAddr" : "192.168.22.151",
       "HostPort" : 8554,
       "Password" : "123n4567",
       "SourceURL" : "/3Mbps_20Min.mkv",
-      "UserNname" : "admin"
+      "Username" : "admin"
    },
    "camera4" : {
+      "Entire" : "rtsp://admin:admin1234@192.168.199.168:8554/30min-nosound.mkv",
       "HostAddr" : "192.168.199.168",
       "HostPort" : 8554,
       "Password" : "admin1234",
       "SourceURL" : "/30min-nosound.mkv",
-      "UserNname" : "admin"
+      "Username" : "admin"
    },
    "pids_broadcast" : {
+      "Entire" : "rtsp://admin:123n4567@192.168.2.199:10554/pids_broadcast.sdp",
       "HostAddr" : "192.168.2.199",
       "HostPort" : 10554,
       "Password" : "123n4567",
       "SourceURL" : "/pids_broadcast.sdp",
-      "UserNname" : "admin"
+      "Username" : "admin"
    }
 }

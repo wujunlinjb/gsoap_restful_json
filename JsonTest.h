@@ -20,5 +20,6 @@ private:
     std::string rootstr;
 
     Json::Reader       reader;
+    Json::FastWriter   fwriter;
     Json::StyledWriter swriter;
 };
