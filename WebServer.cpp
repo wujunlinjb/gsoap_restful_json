@@ -252,14 +252,22 @@ int http_DELETE_handler(struct soap* soap)
     }
 
     Device dev;
-    dev.delete_object(id);
+    const char *reply;
+    if (true == dev.delete_object(id))
+    {
+        reply = "<html>DELETE is OK!</html>";
+    }
+    else
+    {
+        reply = "<html>DELETE is failed!</html>";
+    }
 
     if (soap_response(soap, SOAP_HTML))
     {
         soap_end_send(soap);
         return soap->error;
     }
-    soap_send(soap, "<html>http_DELETE_handler good !!!</html>");
+    soap_send(soap, reply);
     return soap_end_send(soap);
 }
 

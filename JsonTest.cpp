@@ -24,17 +24,20 @@ void Device::add_object(char* id, char* username, char* password, char* ip, uint
     root[id] = subobj;
 }
 
-void Device::delete_object(std::string id)
+bool Device::delete_object(std::string id)
 {
     if (id == "all")
     {
         root.clear();
         std::cout << "root.empty() is " << root.empty() << std::endl;
+        return true;
     }
-    else
+    Json::Value r = root.removeMember(id);
+    if (r.empty())
     {
-        root.removeMember(id);
+        return false;
     }
+    return true;
 }
 
 bool Device::update_object(std::string id, std::string data)
