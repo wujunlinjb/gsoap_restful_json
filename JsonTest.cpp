@@ -24,6 +24,19 @@ void Device::add_object(char* id, char* username, char* password, char* ip, uint
     root[id] = subobj;
 }
 
+void Device::delete_object(std::string id)
+{
+    if (id == "all")
+    {
+        root.clear();
+        std::cout << "root.empty() is " << root.empty() << std::endl;
+    }
+    else
+    {
+        root.removeMember(id);
+    }
+}
+
 bool Device::write_to_file()
 {
     rootstr = swriter.write(root);

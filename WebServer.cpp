@@ -210,12 +210,28 @@ int http_DELETE_handler(struct soap* soap)
         return 401;
     }
     printf("http_DELETE_handler() !\n");
-#if 0
-    if (strchr(soap->path + 1, '/') || strchr(soap->path + 1, '\\'))
-        return 403;
 
-    return remove_file(soap, soap->path+1);
-#endif
+    std::string id;
+    if (!soap_tag_cmp(soap->path, "/device") || !soap_tag_cmp(soap->path, "/device/"))
+    {
+        id = "all";
+    }
+    else if (!soap_tag_cmp(soap->path, "/device/*"))
+    {
+        if (*(soap->path + strlen(soap->path) - 1) == '/')
+        {
+            *(soap->path + strlen(soap->path) - 1) = 0;
+        }
+        id = soap->path + 8;
+    }
+    else
+    {
+        return 404;
+    }
+
+    Device dev;
+    dev.delete_object(id);
+
     if (soap_response(soap, SOAP_HTML))
     {
         soap_end_send(soap);

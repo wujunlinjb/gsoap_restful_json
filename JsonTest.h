@@ -9,6 +9,7 @@ public:
     ~Device(){};
 
     void add_object(char* id, char* username, char* password, char* ip, uint16_t port, char* URL);
+    void delete_object(std::string id);
 
     bool write_to_file();
     bool read_from_file();
