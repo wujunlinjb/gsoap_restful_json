@@ -152,7 +152,10 @@ int http_GET_handler(struct soap* soap)
     {
         return 404;
     }
-    //std::cout << str.size() << " ---- " << str.length() << std::endl;
+    if (str == "{}\n")
+    {
+        str = "NULL\n";
+    }
     if (soap_send_raw(soap, str.c_str(), str.length()))
     {
         soap_end_send(soap);
