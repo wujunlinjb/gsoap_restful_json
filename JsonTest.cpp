@@ -37,6 +37,25 @@ void Device::delete_object(std::string id)
     }
 }
 
+bool Device::update_object(std::string id, std::string data)
+{
+    Json::Value obj;
+    if (false == reader.parse(data, obj))
+    {
+        return false;
+    }
+    if (id == "all")
+    {
+        root.clear();
+        root = obj;
+    }
+    else
+    {
+        root[id] = obj;
+    }
+    return true;
+}
+
 bool Device::write_to_file()
 {
     rootstr = swriter.write(root);
@@ -97,6 +116,7 @@ bool Device::find_by_id(std::string &str, std::string id)
 
             obj[id] = subobj;
             str = swriter.write(obj);
+            //str = obj.toStyledString();    // both are OK
 
             return true;
         }

@@ -10,6 +10,7 @@ public:
 
     void add_object(char* id, char* username, char* password, char* ip, uint16_t port, char* URL);
     void delete_object(std::string id);
+    bool update_object(std::string id, std::string data);
 
     bool write_to_file();
     bool read_from_file();
