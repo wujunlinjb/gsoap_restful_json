@@ -1,3 +1,6 @@
+#ifndef __WEBSERVER_H__
+#define __WEBSERVER_H__
+
 #include "soapH.h"
 #include "httpget.h"
 #include "httppost.h"
@@ -19,3 +22,5 @@ private:
 
     struct http_post_handlers *mpost_handlers;
 };
+
+#endif

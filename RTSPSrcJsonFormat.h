@@ -1,3 +1,6 @@
+#ifndef __RTSPSRC_JSON_FORMAT_H__
+#define __RTSPSRC_JSON_FORMAT_H__
+
 #include <iostream>
 #include "json.h"
 #include "json-forwards.h"
@@ -25,3 +28,5 @@ private:
     Json::FastWriter   fwriter;
     Json::StyledWriter swriter;
 };
+
+#endif

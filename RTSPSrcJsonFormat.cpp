@@ -1,5 +1,5 @@
 #include <fstream>
-#include "JsonTest.h"
+#include "RTSPSrcJsonFormat.h"
 
 #define JSON_FILE "device.json"
 
