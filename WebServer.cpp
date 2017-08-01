@@ -46,8 +46,8 @@ int WebServer::init()
     msoap->userid = USER_ID;
     msoap->passwd = PASSWD;
 
-    Device dev;
-    dev.read_from_file();
+    RTSPSrcJsonFormat rtspsrcjson;
+    rtspsrcjson.read_from_file();
 #if 0
     Json::Value root, aroot;
     Json::Reader reader;
@@ -146,9 +146,9 @@ int http_GET_handler(struct soap* soap)
         return 404;
     }
 
-    Device dev;
+    RTSPSrcJsonFormat rtspsrcjson;
     std::string str;
-    if (dev.find_by_id(str, id) == false)
+    if (rtspsrcjson.find_by_id(str, id) == false)
     {
         return 404;
     }
@@ -210,9 +210,9 @@ int http_PUT_handler(struct soap* soap)
 
     const char *body = soap_get_http_body(soap, NULL);
 
-    Device dev;
+    RTSPSrcJsonFormat rtspsrcjson;
     std::string str = body;
-    if (true == dev.update_object(id, str))
+    if (true == rtspsrcjson.update_object(id, str))
     {
         body = "PUT is OK!";
     }
@@ -254,9 +254,9 @@ int http_DELETE_handler(struct soap* soap)
         return 404;
     }
 
-    Device dev;
+    RTSPSrcJsonFormat rtspsrcjson;
     const char *reply;
-    if (true == dev.delete_object(id))
+    if (true == rtspsrcjson.delete_object(id))
     {
         reply = "<html>DELETE is OK!</html>";
     }

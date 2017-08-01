@@ -2,11 +2,11 @@
 #include "json.h"
 #include "json-forwards.h"
 
-class Device
+class RTSPSrcJsonFormat
 {
 public:
-    Device(){};
-    ~Device(){};
+    RTSPSrcJsonFormat(){};
+    ~RTSPSrcJsonFormat(){};
 
     void add_object(char* id, char* username, char* password, char* ip, uint16_t port, char* URL);
     bool delete_object(std::string id);

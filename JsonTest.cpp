@@ -5,9 +5,9 @@
 
 #define RTSP_REQUEST_LENGTH_MAX    256
 
-Json::Value Device::root;
+Json::Value RTSPSrcJsonFormat::root;
 
-void Device::add_object(char* id, char* username, char* password, char* ip, uint16_t port, char* URL)
+void RTSPSrcJsonFormat::add_object(char* id, char* username, char* password, char* ip, uint16_t port, char* URL)
 {
     char entire[RTSP_REQUEST_LENGTH_MAX] = {0};
     Json::Value subobj;
@@ -24,7 +24,7 @@ void Device::add_object(char* id, char* username, char* password, char* ip, uint
     root[id] = subobj;
 }
 
-bool Device::delete_object(std::string id)
+bool RTSPSrcJsonFormat::delete_object(std::string id)
 {
     if (id == "all")
     {
@@ -40,7 +40,7 @@ bool Device::delete_object(std::string id)
     return true;
 }
 
-bool Device::update_object(std::string id, std::string data)
+bool RTSPSrcJsonFormat::update_object(std::string id, std::string data)
 {
     Json::Value obj;
     if (false == reader.parse(data, obj))
@@ -95,7 +95,7 @@ bool Device::update_object(std::string id, std::string data)
     return true;
 }
 
-bool Device::write_to_file()
+bool RTSPSrcJsonFormat::write_to_file()
 {
     rootstr = swriter.write(root);
     std::cout << rootstr << std::endl;
@@ -112,7 +112,7 @@ bool Device::write_to_file()
     return true;
 }
 
-bool Device::read_from_file()
+bool RTSPSrcJsonFormat::read_from_file()
 {
     std::ifstream in_file(JSON_FILE, std::ios::in|std::ios::binary|std::ios::ate);
 
@@ -133,7 +133,7 @@ bool Device::read_from_file()
     return boolean;
 }
 
-bool Device::find_by_id(std::string &str, std::string id)
+bool RTSPSrcJsonFormat::find_by_id(std::string &str, std::string id)
 {
     if (id == "all")
     {
