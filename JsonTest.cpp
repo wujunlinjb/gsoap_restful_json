@@ -47,10 +47,46 @@ bool Device::update_object(std::string id, std::string data)
     {
         return false;
     }
+
     if (id == "all")
     {
         root.clear();
         root = obj;
+    }
+    else if (root.isMember(id))
+    {
+        if (obj.isMember("Username") && obj["Username"] != "NULL")
+        {
+            root[id]["Username"] = obj["Username"].asString();
+        }
+        if (obj.isMember("Password") && obj["Password"] != "NULL")
+        {
+            root[id]["Password"] = obj["Password"].asString();
+        }
+        if (obj.isMember("HostAddr") && obj["HostAddr"] != "NULL")
+        {
+            root[id]["HostAddr"] = obj["HostAddr"].asString();
+        }
+        if (obj.isMember("HostPort") && obj["HostPort"] != "NULL")
+        {
+            root[id]["HostPort"] = obj["HostPort"].asInt();
+        }
+        if (obj.isMember("SourceURL") && obj["SourceURL"] != "NULL")
+        {
+            root[id]["SourceURL"] = obj["SourceURL"].asString();
+        }
+
+        char entire[RTSP_REQUEST_LENGTH_MAX] = {0};
+        snprintf(entire, RTSP_REQUEST_LENGTH_MAX, "rtsp://%s:%s@%s:%d%s",
+            root[id]["Username"].asString().c_str(),
+            root[id]["Password"].asString().c_str(),
+            root[id]["HostAddr"].asString().c_str(),
+            root[id]["HostPort"].asInt(),
+            root[id]["SourceURL"].asString().c_str());
+
+        root[id]["Entire"] = entire;
+
+        return true;
     }
     else
     {
@@ -111,7 +147,7 @@ bool Device::find_by_id(std::string &str, std::string id)
             Json::Value subobj(root[id]);
             Json::Value obj;
 
-            //subobj["UserNname"] = root[id]["UserNname"].asString();
+            //subobj["Username"] = root[id]["Username"].asString();
             //subobj["Password"]  = root[id]["Password"].asString();
             //subobj["HostAddr"]  = root[id]["HostAddr"].asString();
             //subobj["HostPort"]  = root[id]["HostPort"].asInt();
