@@ -8,7 +8,7 @@
 class WebServer
 {
 public:
-    WebServer(): mpost_handlers(NULL){};
+    WebServer(): msoap(NULL), mpost_handlers(NULL), msoapThreadId(0){};
     ~WebServer(){};
 
     int  init();
@@ -18,8 +18,10 @@ public:
     struct soap* getSoap();
 
 private:
-    struct soap *msoap;
+    static void* _run(void *);
 
+    struct soap *msoap;
+    pthread_t msoapThreadId;
     struct http_post_handlers *mpost_handlers;
 };
 

@@ -1,13 +1,11 @@
 #include "soapH.h"
-
-//#include "json.h"
-//#include "json-forwards.h"
+#include "WebServer.h"
 #include "RTSPSrcJsonFormat.h"
 
-#include "WebServer.h"
 
 #define USER_ID "admin"
 #define PASSWD  "123n4567"
+#define mSec   *-1000
 
 #define PORT       8080
 #define LISTENMAX  100
@@ -45,6 +43,7 @@ int WebServer::init()
 
     msoap->userid = USER_ID;
     msoap->passwd = PASSWD;
+    msoap->accept_timeout = 50 mSec;
 
     RTSPSrcJsonFormat rtspsrcjson;
     rtspsrcjson.read_from_file();
@@ -76,40 +75,57 @@ int WebServer::init()
     return 0;
 }
 
-int WebServer::run()
+void* WebServer::_run(void* wsptr)
 {
-    SOAP_SOCKET ssock = soap_bind(msoap, 0, PORT, LISTENMAX);
+    WebServer* me = (WebServer*)wsptr;
+    SOAP_SOCKET ssock = soap_bind(me->msoap, 0, PORT, LISTENMAX);
     if (!soap_valid_socket(ssock))
     {
-        soap_print_fault(msoap, stderr);
-        return 1;
+        soap_print_fault(me->msoap, stderr);
+        return ((void*)1);
     }
 
     printf("Start accept client!\n");
 
-    while (1)
+    while (true)
     {
-        SOAP_SOCKET ssockclient = soap_accept(msoap);
+        pthread_testcancel();
+
+        SOAP_SOCKET ssockclient = soap_accept(me->msoap);
         if (!soap_valid_socket(ssockclient))
         {
-            if (msoap->errnum)
-            {
-                soap_print_fault(msoap, stderr);
-                printf("Retry...\n");
-                continue;
-            }
-            printf("gSOAP Web server timed out\n");
-            break;
+            //if (me->msoap->errnum)
+            //{
+                //soap_print_fault(me->msoap, stderr);
+                //printf("Retry...\n");
+                //continue;
+            //}
+            //printf("gSOAP Web server timed out\n");
+            continue;
         }
         printf("Client Connect!\n");
-        soap_serve(msoap);
+        soap_serve(me->msoap);
     }
 
+    return ((void*)0);
+}
+
+int WebServer::run()
+{
+    int r;
+    r = pthread_create(&msoapThreadId, NULL, _run, (void*)this);
+    if (r != 0)
+    {
+        printf("webserver start failed!\n");
+        return r;
+    }
     return 0;
 }
 
 void WebServer::end()
 {
+    pthread_cancel(msoapThreadId);
+    pthread_join(msoapThreadId, NULL);
     soap_destroy(msoap);
     soap_end(msoap);
     soap_done(msoap);

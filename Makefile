@@ -8,7 +8,7 @@ SRC=$(wildcard ./*.cpp) \
 	./plugin/httppost.c \
 	./jsoncpp/jsoncpp.cpp
 
-LIBS=-lgsoap++
+LIBS=-lgsoap++ -lpthread
 CIFLAGS=-I./plugin \
 		-I./soap_generation_files \
 		-I./jsoncpp
